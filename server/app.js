@@ -1,5 +1,5 @@
 // developed modules
-var {mongoose} = require('./db/mongoose')
+var {mongoose} = require('./db/mongoose');
 var {Farm} = require('./models/farms');
 var {Order} = require('./models/orders');
 
@@ -57,17 +57,17 @@ app.get('/farms', (req, res) => {
         });
     }, (e)=> {
         res.status.send(e, 'named err');
-    })
-})
+    });
+});
 app.get('/orders', (req, res) => {
     Order.find().then((orders)=>{
         res.send({
             orders
         });
-    }, (e)=> {
+    }, (e) => {
         res.status.send(e, 'named err');
-    })
-})
+    });
+});
 // var newFarm = new Farm ({
 //     name:'Nanda Farms'
 // });
