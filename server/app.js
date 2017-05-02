@@ -51,7 +51,22 @@ app.post('/orders', (req, res) => {
 
 // GET APIs
 app.get('/farms', (req, res) => {
-    Farm.find().then((farms)=>{
+
+// To limit results
+    var offset = 0;
+    var count = 5;
+
+    if (req.query && req.query.offset) {
+        offset = parseInt(req.query.offset, 10);
+    }
+
+    if (req.query && req.query.count) {
+        count= parseInt(req.query.count, 10);
+    }
+    Farm.find()
+        .skip(offset)
+        .limit(count)
+        .then((farms)=>{
         res.send({
             farms
         });
@@ -59,6 +74,17 @@ app.get('/farms', (req, res) => {
         res.status.send(e, 'named err');
     });
 });
+
+// Get farm by farmid
+app.get('/farms/:farmID', (req, res) => {
+    var farmID= req.params.farmID;
+    Farm
+        .findById(farmID).then((farms) =>{ res.send({
+            farms
+        });
+    }, (e)=> {res.status.send(e, 'named err')})
+        });
+
 app.get('/orders', (req, res) => {
     Order.find().then((orders)=>{
         res.send({
